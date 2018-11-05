@@ -16,7 +16,7 @@ predictors <- names(select(eof, rain:ARFdays14, sin_sdate:snwd_diff, days_since_
                            ant_dis_1day_max:ant_dis_14day_max, frozen))
 
 # drop site-specific predictors that shouldn't be in mod
-predictors <- predictors[-which(predictors %in% predictors_drop)]
+predictors <- predictors[!(predictors %in% predictors_drop)]
                     
 # set responses and set cleaner name to plot for responses
 if (length(concentrations) > 1) {
