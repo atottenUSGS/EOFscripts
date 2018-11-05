@@ -107,7 +107,7 @@ prop <- wq.temp %>%
   summarise_at(vars(loadvars), sum)
 
 # change names to be shortened/clean versions
-names(prop)[2:ncol(prop)] <- clean_names[(length(concvars) + 1):(length(clean_names))]
+names(prop)[2:ncol(prop)] <- clean_names
 prop.long <- prop %>%
   gather(variable, value, -frozen)
 
