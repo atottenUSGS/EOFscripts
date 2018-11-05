@@ -3,7 +3,7 @@ temp.filename <- paste0(site, '_mod_dat.csv')
 dat <- read.csv(file.path('data_cached', temp.filename))
 
 # change infinite values to 365, representing a full year since application
-dat<-do.call(data.frame,lapply(dat, function(x) replace(x, is.infinite(x),365)))
+dat[,c("days_since_cultivation","days_since_fertilizer","days_since_planting")]<-do.call(data.frame,lapply(dat[,c("days_since_cultivation","days_since_fertilizer","days_since_planting")], function(x) replace(x, is.infinite(x),365)))
                                
 # change 'NaN' values to NA to omit during data processing
 dat<-do.call(data.frame,lapply(dat, function(x) replace(x, "NaN",NA)))
@@ -27,7 +27,7 @@ drop.predictors <- caret::findCorrelation(predictors.cor, cutoff = 0.95, verbose
 predictors.keep <- c(names.cor[-drop.predictors], 'frozen')
 
 # Change all 0 values to 0.0000001, so we can take the log10 of those vlaues
-dat.mod[dat.mod==0] <- 0.0000001
+dat.mod[,responses][dat.mod[,responses]==0] <- 0.0000001
                                
 # log transform response vars
 dat.mod[,responses] <- log10(dat.mod[,responses])
